@@ -4,5 +4,10 @@
   "main": "index.js",
   "repository": "git@github.com:evilboss/realtime-inventory.git",
   "author": "jr <jr.evilboss@gmail.com>",
-  "license": "MIT"
+  "license": "MIT",
+  "scripts": {
+    "setup": "cd $(pwd)/client && yarn && cd $(pwd)/../ && cd server/ && yarn && echo Setup Complete",
+    "run-server": "",
+    "run-client": ""
+  }
 }
