@@ -9,7 +9,7 @@ import Devices from "./Devices";
 const Main = () => (
   <main>
     <Switch>
-      <Route exact path="/" component={Pos} />
+      <Route exact path="/" component={Inventory} />
       <Route path="/inventory" component={Inventory} />
       <Route path="/transactions" component={Transactions} />
       <Route path="/livecart" component={LiveCart} />
