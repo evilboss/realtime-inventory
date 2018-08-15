@@ -32,7 +32,7 @@ app.all("/*", function(req, res, next) {
 app.get("/", function(req, res) {
   res.send(" Real time POS web app running.");
 });
-
+app.use("/api/devices", require("./api/devices"));
 app.use("/api/inventory", require("./api/inventory"));
 app.use("/api", require("./api/transactions"));
 
