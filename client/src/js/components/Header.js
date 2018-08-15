@@ -8,7 +8,7 @@ const Header = () => (
         <h1>
             <a href="/#/">Machine Vision Inventory</a>
         </h1>
-
+        <h3>Sample</h3>
         <ul className="nav-menu">
             <li className="lead">
                 <Link to="/inventory">Inventory</Link>
@@ -19,5 +19,4 @@ const Header = () => (
         </ul>
     </div>
 );
-
 export default Header;
