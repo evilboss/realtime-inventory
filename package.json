@@ -1,0 +1,8 @@
+{
+  "name": "realtime-inventory",
+  "version": "1.0.0",
+  "main": "index.js",
+  "repository": "git@github.com:evilboss/realtime-inventory.git",
+  "author": "jr <jr.evilboss@gmail.com>",
+  "license": "MIT"
+}
