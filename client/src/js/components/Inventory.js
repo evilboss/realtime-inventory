@@ -1,199 +1,102 @@
-import React, {Component} from "react";
-import "./App.css";
-import Header from "./Header";
-import Product from "./Product";
-import axios from "axios";
-import {Modal, Button} from "react-bootstrap";
+import React from "react";
+import ReactDOM from "react-dom"
+import {connect} from 'react-redux'
+import {
+    addNewItem, loadInitialData, markItemComplete
+    , loadInitialDataSocket, addNewItemSocket, markItemCompleteSocket
+    , AddItem, completeItem
+} from '../actions/action'
+import io from "socket.io-client"
 
-const HOST = "http://localhost:8001";
+import TextField from 'material-ui/TextField'
+import RaisedButton from 'material-ui/RaisedButton'
+import {List, ListItem} from 'material-ui/List'
+import Divider from 'material-ui/Divider'
 
-class Inventory extends Component {
+// import {List as List} from 'immutable';
+
+import injectTapEventPlugin from 'react-tap-event-plugin'
+
+injectTapEventPlugin();
+
+let robotFontStyle = {
+    fontFamily: "Roboto, sans-serif",
+    color: "rgba(0, 0, 0, 0.870588)"
+};
+let markCompleteStyle = {
+    textDecoration: "line-through"
+};
+let socket
+const mapStateToProps = (state = {}) => {
+    // console.dir(state)
+    return {...state};
+};
+
+export class Inventory extends React.Component {
     constructor(props) {
         super(props);
+        const {dispatch} = this.props;
+        //    dispatch(loadInitialData())
+        socket = io.connect("http://localhost:5000");
+        console.dir(socket);
+        dispatch(loadInitialDataSocket(socket));
 
-        this.state = {
-            products: [],
-            productFormModal: false,
-            name: "",
-            snackMessage: "",
-            quantity: ""
-        };
-        this.handleNewProduct = this.handleNewProduct.bind(this);
-        this.handleName = this.handleName.bind(this);
-        //this.handlePrice = this.handlePrice.bind(this);
-        this.handleQuantity = this.handleQuantity.bind(this);
-        this.handleSnackbar = this.handleSnackbar.bind(this);
-    }
+        socket.on('itemAdded', (res) => {
+            console.dir(res);
+            dispatch(AddItem(res))
+        });
 
-    componentWillMount() {
-        var url = HOST + `/api/inventory/products`;
-        axios.get(url).then(response => {
-            this.setState({products: response.data});
+        socket.on('itemMarked', (res) => {
+            console.dir(res);
+            dispatch(completeItem(res))
         });
     }
 
-    handleNewProduct = e => {
-        e.preventDefault();
-        this.setState({productFormModal: false});
-        var newProduct = {
-            name: this.state.name,
-            quantity: this.state.quantity,
-            price: this.state.price
-        };
-
-        axios
-            .post(HOST + `/api/inventory/product`, newProduct)
-            .then(
-                response =>
-                    this.setState({snackMessage: "Product Added Successfully!"}),
-                this.handleSnackbar()
-            )
-            .catch(err => {
-                console.log(err),
-                    this.setState({snackMessage: "Product failed to save"}),
-                    this.handleSnackbar();
-            });
-    };
-    handleEditProduct = editProduct => {
-        axios
-            .put(HOST + `/api/inventory/product`, editProduct)
-            .then(response => {
-                this.setState({snackMessage: "Product Updated Successfully!"});
-                this.handleSnackbar();
-                return true;
-            })
-            .catch(err => {
-                console.log(err);
-                this.setState({snackMessage: "Product Update Failed!"}),
-                    this.handleSnackbar();
-                return false;
-            });
-    };
-
-    handleName = e => {
-        this.setState({name: e.target.value});
-    };
-    handlePrice = e => {
-        this.setState({price: e.target.value});
-    };
-    handleQuantity = e => {
-        this.setState({quantity: e.target.value});
-    };
-    handleSnackbar = () => {
-        var bar = document.getElementById("snackbar");
-        bar.className = "show";
-        setTimeout(function () {
-            bar.className = bar.className.replace("show", "");
-        }, 3000);
-    };
+    componentWillUnmount() {
+        socket.disconnect();
+        alert("Disconnecting Socket as component will unmount")
+    }
 
     render() {
-        var {products, snackMessage} = this.state;
-
-        var renderProducts = () => {
-            if (products.length === 0) {
-                return <p>{products}</p>;
-            } else {
-                return products.map(product => (
-                    <Product {...product} onEditProduct={this.handleEditProduct}/>
-                ));
-            }
-        };
+        const {dispatch, items} = this.props
 
         return (
             <div>
-                <Header/>
+                <h1 style={robotFontStyle}>Machine Vision Inventory</h1>
 
-                <div class="container">
-                    <a
-                        class="btn btn-success pull-right"
-                        onClick={() => this.setState({productFormModal: true})}
-                    >
-                        <i class="glyphicon glyphicon-plus"/> Add New Item
-                    </a>
-                    <br/>
-                    <br/>
+                <Divider/>
+                <TextField
+                    hintText="Add New Item"
+                    floatingLabelText="Enter the new item"
+                    ref="newTodo"
+                />
+                {" "}
+                <RaisedButton
+                    label="Click to add!" primary={true}
+                    onTouchTap={() => {
+                        const newItem = ReactDOM.findDOMNode(this.refs.newTodo.input).value
+                        newItem === "" ? alert("Item shouldn't be blank")
+                            : dispatch(addNewItemSocket(socket, items.size, newItem))
+                        {/*: dispatch(addNewItem(items.size,newItem))*/
+                        }
+                        ReactDOM.findDOMNode(this.refs.newTodo.input).value = ""
+                    }
+                    }
+                />
+                <List>{items.map((item, key) => {
+                    return <ListItem key={key} style={item.completed ? markCompleteStyle : {}} onClick={(event) => {
+                        {/*dispatch(markItemComplete(key+1,!todo.completed))*/
+                        }
+                        dispatch(markItemCompleteSocket(socket, key + 1, !item.completed))
+                    }
+                    } primaryText={item.name}>
+                    </ListItem>
+                })
+                }</List>
 
-                    <table class="table">
-                        <thead>
-                        <tr>
-                            <th scope="col">Name</th>
-                            <th scope="col">Quantity</th>
-                            <th/>
-                        </tr>
-                        </thead>
-                        <tbody>{renderProducts()}</tbody>
-                    </table>
-                </div>
-
-                <Modal show={this.state.productFormModal}>
-                    <Modal.Header>
-                        <Modal.Title>Add Product</Modal.Title>
-                    </Modal.Header>
-                    <Modal.Body>
-                        <form class="form-horizontal" name="newProductForm">
-                            {/* <div class="form-group">
-                                <label class="col-md-4 control-label" for="barcode">
-                                    Barcode
-                                </label>
-                                <div class="col-md-4">
-                                    <input
-                                        id="barcode"
-                                        name="barcode"
-                                        placeholder="Barcode"
-                                        class="form-control"
-                                    />
-                                </div>
-                            </div>*/}
-                            <div class="form-group">
-                                <label class="col-md-4 control-label" for="name">
-                                    Name
-                                </label>
-                                <div class="col-md-4">
-                                    <input
-                                        name="name"
-                                        placeholder="Name"
-                                        class="form-control"
-                                        onChange={this.handleName}
-                                    />
-                                </div>
-                            </div>
-
-                            <div class="form-group">
-                                <label class="col-md-4 control-label" for="quantity_on_hand">
-                                    Quantity
-                                </label>
-                                <div class="col-md-4">
-                                    <input
-                                        name="quantity_on_hand"
-                                        placeholder="Quantity"
-                                        onChange={this.handleQuantity}
-                                        class="form-control"
-                                    />
-                                </div>
-                            </div>
-                            {/*
-                            <div className="form-group">
-                                <label className="col-md-4 control-label" htmlFor="image">
-                                    Upload Image
-                                </label>
-                                <div className="col-md-4">
-                                    <input type="file" name="image"/>
-                                </div>
-                            </div>*/}
-                            <br/> <br/> <br/>
-                        </form>
-                    </Modal.Body>
-                    <Modal.Footer>
-                        <Button onClick={() => this.setState({productFormModal: false})}>
-                            Close
-                        </Button>
-                        <Button onClick={this.handleNewProduct}>Submit</Button>
-                    </Modal.Footer>
-                </Modal>
-                <div id="snackbar">{snackMessage}</div>
             </div>
         );
     }
 }
-export default Inventory;
+
+export default connect(mapStateToProps)(Inventory);

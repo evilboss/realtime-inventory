@@ -33,7 +33,6 @@ app.get("/product/:productId", function(req, res) {
 // GET all inventory products
 app.get("/products", function(req, res) {
   inventoryDB.find({}, function(err, docs) {
-    console.log("Display Products");
     res.send(docs);
   });
 });

@@ -25,7 +25,9 @@
   "license": "MIT",
   "dependencies": {
     "async": "^2.6.0",
+    "axios": "^0.18.0",
     "body-parser": "^1.18.2",
+    "dotenv": "^6.0.0",
     "express": "^4.16.2",
     "http": "0.0.0",
     "https": "^1.0.0",
