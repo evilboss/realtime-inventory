@@ -3,3 +3,4 @@
 server/yarn.lock
 server/package-lock.json
 yarn-error.log
+/client/yarn.lock
