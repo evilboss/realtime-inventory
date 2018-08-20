@@ -8,10 +8,6 @@ import {
 } from '../actions/action'
 import io from "socket.io-client"
 
-import TextField from 'material-ui/TextField'
-import RaisedButton from 'material-ui/RaisedButton'
-import {List, ListItem} from 'material-ui/List'
-import Divider from 'material-ui/Divider'
 
 // import {List as List} from 'immutable';
 
@@ -54,45 +50,43 @@ export class Inventory extends React.Component {
 
     componentWillUnmount() {
         socket.disconnect();
-        alert("Disconnecting Socket as component will unmount")
+        console.log('disconnecting');
     }
 
     render() {
-        const {dispatch, items} = this.props
+        const {dispatch, items} = this.props;
 
         return (
             <div>
                 <h1 style={robotFontStyle}>Machine Vision Inventory</h1>
 
-                <Divider/>
-                <TextField
+                <input
                     hintText="Add New Item"
                     floatingLabelText="Enter the new item"
                     ref="newTodo"
                 />
-                {" "}
-                <RaisedButton
+                <button
                     label="Click to add!" primary={true}
                     onTouchTap={() => {
-                        const newItem = ReactDOM.findDOMNode(this.refs.newTodo.input).value
+                        const newItem = ReactDOM.findDOMNode(this.refs.newTodo.input).value;
                         newItem === "" ? alert("Item shouldn't be blank")
-                            : dispatch(addNewItemSocket(socket, items.size, newItem))
+                            : dispatch(addNewItemSocket(socket, items.size, newItem));
                         {/*: dispatch(addNewItem(items.size,newItem))*/
                         }
                         ReactDOM.findDOMNode(this.refs.newTodo.input).value = ""
                     }
                     }
                 />
-                <List>{items.map((item, key) => {
-                    return <ListItem key={key} style={item.completed ? markCompleteStyle : {}} onClick={(event) => {
+                <ul>{items.map((item, key) => {
+                    return <li key={key} style={item.completed ? markCompleteStyle : {}} onClick={(event) => {
                         {/*dispatch(markItemComplete(key+1,!todo.completed))*/
                         }
                         dispatch(markItemCompleteSocket(socket, key + 1, !item.completed))
                     }
                     } primaryText={item.name}>
-                    </ListItem>
+                    </li>
                 })
-                }</List>
+                }</ul>
 
             </div>
         );
