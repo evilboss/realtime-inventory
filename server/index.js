@@ -63,7 +63,7 @@ io.on('connection', function (socket) {
     })*/
     // 		.cursor()
     // cursor.on('data',(res)=> {socket.emit('initialList',res)})
-    Inventory.getAll((err, res) => {
+    Inventory.get((err, res) => {
         if (res) {
             socket.emit('initialList', (res));
         }
