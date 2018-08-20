@@ -3,8 +3,6 @@
   "version": "0.1.0",
   "private": true,
   "dependencies": {
-    "@material-ui/core": "1.4.3",
-    "@material-ui/icons": "2.0.1",
     "axios": "^0.17.1",
     "bootstrap": "^3.3.7",
     "chartist": "0.10.1",
@@ -22,6 +20,7 @@
     "react-router-redux": "^4.0.8",
     "react-scripts": "1.1.0",
     "react-tap-event-plugin": "^3.0.3",
+    "react-iframe": "^1.2.0",
     "recharts": "^1.1.0",
     "redux": "^3.7.2",
     "redux-thunk": "^2.2.0",
