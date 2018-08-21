@@ -3,7 +3,6 @@ import Inventory from "../models/inventoryModel";
 
 const tail = new Tail('./databases/items.db');
 const emit = (socket, data) => {
-    console.log('emmmititng data');
     socket.emit('initialList', (data));
 };
 const list = (socket) => {

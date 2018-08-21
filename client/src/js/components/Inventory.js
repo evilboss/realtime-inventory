@@ -63,27 +63,29 @@ export class Inventory extends React.Component {
                 <input
                     hintText="Add New Item"
                     floatingLabelText="Enter the new item"
-                    ref="newTodo"
+                    ref="newItem"
                 />
                 <button
                     label="Click to add!" primary={true}
-                    onTouchTap={() => {
-                        const newItem = ReactDOM.findDOMNode(this.refs.newTodo.input).value;
+                    onClick={() => {
+                        const newItem = ReactDOM.findDOMNode(this.refs.newItem).value;
                         newItem === "" ? alert("Item shouldn't be blank")
                             : dispatch(addNewItemSocket(socket, items.size, newItem));
                         {/*: dispatch(addNewItem(items.size,newItem))*/
                         }
-                        ReactDOM.findDOMNode(this.refs.newTodo.input).value = ""
+                        ReactDOM.findDOMNode(this.refs.newItem).value = ""
                     }
                     }
                 />
                 <ul>{items.map((item, key) => {
-                    return <li key={key} style={item.completed ? markCompleteStyle : {}} onClick={(event) => {
+                    return <li key={key} onClick={(event) => {
                         {/*dispatch(markItemComplete(key+1,!todo.completed))*/
                         }
                         dispatch(markItemCompleteSocket(socket, key + 1, !item.completed))
                     }
-                    } primaryText={item.name}>
+
+                    }>
+                        {item.name}
                     </li>
                 })
                 }</ul>
