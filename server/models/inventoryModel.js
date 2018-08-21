@@ -12,13 +12,14 @@ const get = (callback) => {
         callback(null, docs);
     });
 };
-const insert = (product) => {
-    inventoryDB.insert(newProduct, function (err, product) {
-        return (err) ? err : product;
+const insert = (newProduct, callback) => {
+    console.log('inserting item');
+    inventoryDB.insert(newProduct, (err, product) => {
+        callback(err, product);
     });
 };
 const remove = (productId) => {
-    inventoryDB.remove({_id: productId}, function (err, numRemoved) {
+    inventoryDB.remove({_id: productId}, (err, numRemoved) => {
         return (err) ? err : numRemoved;
     });
 };

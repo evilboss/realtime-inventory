@@ -8,6 +8,7 @@ var express = require("express"),
 import dotenv from 'dotenv';
 import axios from 'axios';
 import Inventory from './models/inventoryModel';
+import {InventorySocket} from './websocket/index';
 
 dotenv.config();
 
@@ -41,13 +42,12 @@ app.use("/api/devices", require("./api/devices"));
 app.use("/api/inventory", require("./api/inventory"));
 app.use("/api", require("./api/transactions"));
 
-// Websocket logic for Live Cart
+// Websocket logic
 let interval;
 
 server.listen(PORT, () => console.log(`Listening on PORT ${PORT}`));
 const connections = [];
 io.on('connection', function (socket) {
-    console.log("Connected to Socket!!" + socket.id);
     connections.push(socket);
     socket.on('disconnect', function () {
         console.log('Disconnected - ' + socket.id);
@@ -63,16 +63,7 @@ io.on('connection', function (socket) {
     })*/
     // 		.cursor()
     // cursor.on('data',(res)=> {socket.emit('initialList',res)})
-    Inventory.get((err, res) => {
-        if (res) {
-            socket.emit('initialList', (res));
-        }
-    });
-
-
-    socket.on('addItem', (addData) => {
-
-    });
+    InventorySocket.start(socket);
     socket.on('markItem', (markedItem) => {
     });
 
