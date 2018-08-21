@@ -13,7 +13,6 @@ const get = (callback) => {
     });
 };
 const insert = (newProduct, callback) => {
-    console.log('inserting item');
     inventoryDB.insert(newProduct, (err, product) => {
         callback(err, product);
     });

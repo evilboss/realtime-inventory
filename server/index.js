@@ -10,6 +10,8 @@ import axios from 'axios';
 import Inventory from './models/inventoryModel';
 import {InventorySocket} from './websocket/index';
 
+import api from "./api/transactions";
+
 dotenv.config();
 
 const PORT = process.env.PORT || 8001;
@@ -40,10 +42,12 @@ app.get("/", function (req, res) {
 
 app.use("/api/devices", require("./api/devices"));
 app.use("/api/inventory", require("./api/inventory"));
-app.use("/api", require("./api/transactions"));
+app.use('/api/events',require('./api/events'));
 
-// Websocket logic
-let interval;
+app.use("/api", require('./api/transactions'));
+
+
+// Websocket
 
 server.listen(PORT, () => console.log(`Listening on PORT ${PORT}`));
 const connections = [];
@@ -53,16 +57,6 @@ io.on('connection', function (socket) {
         console.log('Disconnected - ' + socket.id);
     });
 
-    /*var cursor = todoModel.find({},"-_id itemId item completed",(err,result)=>{
-        if (err){
-            console.log("---Gethyl GET failed!!")
-        }
-        else {
-            console.log("+++Gethyl GET worked!!");
-        }
-    })*/
-    // 		.cursor()
-    // cursor.on('data',(res)=> {socket.emit('initialList',res)})
     InventorySocket.start(socket);
     socket.on('markItem', (markedItem) => {
     });
