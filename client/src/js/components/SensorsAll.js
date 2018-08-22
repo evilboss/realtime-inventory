@@ -9,11 +9,11 @@ const mapStateToProps = (state = {}) => {
     return {...state};
 };
 
-class SensorsAll extends React.Component {
+export class SensorsAll extends React.Component {
     render() {
         return (<h1>All Sensors</h1>)
     }
 
 }
 
-export default SensorsAll;
+export default connect(mapStateToProps)(SensorsAll);
