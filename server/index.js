@@ -8,7 +8,7 @@ var express = require("express"),
 import dotenv from 'dotenv';
 import axios from 'axios';
 import Inventory from './models/inventoryModel';
-import {InventorySocket} from './websocket/index';
+import {InventorySocket, SensorSocket} from './websocket/index';
 
 dotenv.config();
 
@@ -40,7 +40,7 @@ app.get("/", function (req, res) {
 
 app.use("/api/devices", require("./api/devices"));
 app.use("/api/inventory", require("./api/inventory"));
-app.use('/api/events',require('./api/events'));
+app.use('/api/events', require('./api/events'));
 
 
 // Websocket
@@ -54,6 +54,7 @@ io.on('connection', function (socket) {
     });
 
     InventorySocket.start(socket);
+    SensorSocket.start(socket);
     socket.on('markItem', (markedItem) => {
     });
 

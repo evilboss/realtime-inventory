@@ -19,6 +19,12 @@ export const initialItems = (res) => ({
     items: res
 });
 
+
+export const sensorList = (res) => ({
+    type: "SENSOR_LIST",
+    sensors: res
+});
+
 /***************************************************************************************** */
 /* Async Action items using - Sockets													   */
 /***************************************************************************************** */
@@ -31,7 +37,15 @@ export const loadInitialDataSocket = (socket) => {
         })
     }
 };
-
+export const loadSensorSocket = (socket) => {
+    return (dispatch) => {
+        // dispatch(clearAllItems())
+        socket.on('sensorList', (res) => {
+            //console.dir(res);
+            dispatch(sensorList(res));
+        })
+    }
+};
 export const addNewItemSocket = (socket, id, itemName) => {
     return (dispatch) => {
         let data = {
@@ -50,3 +64,4 @@ export const markItemCompleteSocket = (socket, id, completedFlag) => {
         socket.emit('markItem', postData)
     }
 };
+
