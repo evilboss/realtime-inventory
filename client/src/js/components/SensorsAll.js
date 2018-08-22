@@ -3,7 +3,6 @@ import ReactDOM from "react-dom"
 import {connect} from 'react-redux'
 import io from "socket.io-client"
 import {
-    loadInitialDataSocket,
     loadSensorSocket,
 } from '../actions/action';
 
@@ -20,8 +19,6 @@ export class SensorsAll extends React.Component {
         //    dispatch(loadInitialData())
         socket = io.connect("http://localhost:5000");
         dispatch(loadSensorSocket(socket));
-        dispatch(loadInitialDataSocket(socket));
-
     }
 
     componentWillUnmount() {
@@ -30,8 +27,7 @@ export class SensorsAll extends React.Component {
     }
 
     render() {
-        const {dispatch, sensors, items} = this.props;
-        console.log(sensors, items);
+        const {dispatch, sensors} = this.props;
         return (
             <div className='container'>
                 <h1>All Sensors </h1>
@@ -44,7 +40,7 @@ export class SensorsAll extends React.Component {
                         </tr>
                         </thead>
                         <tbody>
-                        {sensors.map((sensor, key) => <tr>
+                        {sensors.map((sensor, key) => <tr key={key}>
                             <td>{sensor.status}</td>
                             <td>{sensor.signature}</td>
                         </tr>)}

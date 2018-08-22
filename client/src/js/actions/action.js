@@ -1,4 +1,12 @@
-import axios from "axios"
+import axios from "axios";
+import _ from 'underscore';
+
+const formatSensors = (sensors, items) => {
+    let formatedSensors = [];
+    _.each(sensors, (sensor) => {
+        formatedSensors.push({name: sensor.name, signature: sensor.signature});
+    });
+};
 
 export const AddItem = (data) => ({
     type: "ADD_ITEM",
