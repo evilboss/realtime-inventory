@@ -5,6 +5,7 @@ var PythonShell = require('python-shell');
 app.use(bodyParser.json());
 
 module.exports = app;
+
 const getDevices = (callback) => {
     var options = "";
     PythonShell.run('../scripts/deviceList.py', options, function (err, results) {
@@ -27,3 +28,5 @@ app.get('/all', function (req, res) {
 
 });
 
+const Devices = {};
+export default Devices;

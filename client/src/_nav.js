@@ -11,8 +11,6 @@ export default {
         {
             title: true,
             name: 'Inventory',
-
-            // optional class names space delimited list for title item ex: "text-center"
         },
         {
             name: 'Products',
@@ -21,8 +19,8 @@ export default {
         },
         {
             name: 'Stats',
-            url: '/theme/colors',
             icon: 'cui-bar-chart',
+            url: '/stats'
         },
         {
             divider: true,
@@ -40,22 +38,54 @@ export default {
             divider: true,
         },
         {
+            name: 'Events',
+            icon: 'fas fa-calendar-alt',
+        },
+        {
             name: 'Video Feed',
-            url: '/base',
-            icon: 'icon-puzzle',
+            icon: 'fas fa-video',
         },
         {
             name: 'Weight Sensors',
-            url: '/buttons',
-            icon: 'cui-microchip',
+            icon: 'fas fa-balance-scale',
+            children: [
+                {
+                    name: 'All Sensors',
+                    icon: 'fab fa-cloudscale',
+                    url: '/sensors'
+                },
+                {
+                    name: 'Sensor Settings',
+                    icon: 'fas fa-weight',
+                    url: '/sensors/settings'
+
+                },
+                {
+                    name: 'Sensor Calibration',
+                    icon: 'fas fa-dumbbell',
+                    url: '/sensors/calibration'
+
+
+                }
+            ]
+
+
         },
+
         {
             divider: true,
         },
         {
             title: true,
             name: 'System Settings',
+
             // optional class names space delimited list for title item ex: "text-center"
+        },
+        {
+            name: 'Device Settings',
+            icon: 'fas fa-cogs',
+            url: '/device-settings',
+
         },
     ],
 };

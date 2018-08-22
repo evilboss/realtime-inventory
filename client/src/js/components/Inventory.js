@@ -7,10 +7,6 @@ import {
     , AddItem, completeItem
 } from '../actions/action'
 import io from "socket.io-client"
-
-
-// import {List as List} from 'immutable';
-
 import injectTapEventPlugin from 'react-tap-event-plugin'
 
 injectTapEventPlugin();
@@ -22,7 +18,7 @@ let robotFontStyle = {
 let markCompleteStyle = {
     textDecoration: "line-through"
 };
-let socket
+let socket;
 const mapStateToProps = (state = {}) => {
     // console.dir(state)
     return {...state};
@@ -60,13 +56,40 @@ export class Inventory extends React.Component {
             <div>
                 <h1 style={robotFontStyle}>Machine Vision Inventory</h1>
 
+                <div className="table-responsive">
+                    <table className="table table-hover table-striped table-bordered table-dark">
+                        <thead>
+                        <tr>
+                            <th scope="col">#</th>
+                            <th scope="col">Name</th>
+                            <th scope="col">Current Stock</th>
+                            <th scope="col">Description</th>
+                        </tr>
+                        </thead>
+                        <tbody>
+                        {items.map((item, key) => {
+                            return <tr key={key} onClick={(event) => {
+                                {/*dispatch(markItemComplete(key+1,!todo.completed))*/
+                                }
+                                dispatch(markItemCompleteSocket(socket, key + 1, !item.completed))
+                            }
+
+                            }>
+                                <td>{key}</td>
+                                <td> {item.name}</td>
+                            </tr>
+                        })
+                        }
+                        </tbody>
+                    </table>
+                </div>
+
                 <input
                     hintText="Add New Item"
                     floatingLabelText="Enter the new item"
                     ref="newItem"
                 />
                 <button
-                    label="Click to add!" primary={true}
                     onClick={() => {
                         const newItem = ReactDOM.findDOMNode(this.refs.newItem).value;
                         newItem === "" ? alert("Item shouldn't be blank")
@@ -76,19 +99,8 @@ export class Inventory extends React.Component {
                         ReactDOM.findDOMNode(this.refs.newItem).value = ""
                     }
                     }
-                />
-                <ul>{items.map((item, key) => {
-                    return <li key={key} onClick={(event) => {
-                        {/*dispatch(markItemComplete(key+1,!todo.completed))*/
-                        }
-                        dispatch(markItemCompleteSocket(socket, key + 1, !item.completed))
-                    }
-
-                    }>
-                        {item.name}
-                    </li>
-                })
-                }</ul>
+                >Add
+                </button>
 
             </div>
         );

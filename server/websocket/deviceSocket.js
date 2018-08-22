@@ -1,10 +1,11 @@
 import {Tail} from 'tail';
-import Inventory from "../models/inventoryModel";
-
-const tail = new Tail('./databases/items.db');
+import Devices from "../models/deviceModel";
+const tail = new Tail('./databases/devices.db');
 const emit = (socket, data) => {
-    socket.emit('initialList', (data));
+    socket.emit('deviceList', (data));
 };
+const emitData = ()=>{};
+
 const list = (socket) => {
     Inventory.get((err, res) => {
         (res) ? emit(socket, res) : ''
@@ -22,9 +23,9 @@ const start = (socket) => {
     list(socket);
     insert(socket);
 };
-const InventorySocket = {
+const DeviceSocket = {
     start: start,
     list: list,
     insert: insert
 };
-export default InventorySocket;
+export default DeviceSocket;

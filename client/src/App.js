@@ -10,8 +10,7 @@ import '@coreui/icons/css/coreui-icons.min.css';
 // Import Flag Icons Set
 import 'flag-icon-css/css/flag-icon.min.css';
 // Import Font Awesome Icons Set
-import 'font-awesome/css/font-awesome.min.css';
-// Import Simple Line Icons Set
+import '@fortawesome/fontawesome-free/css/all.min.css';
 import 'simple-line-icons/css/simple-line-icons.css';
 import './scss/style.css'
 

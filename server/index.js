@@ -10,12 +10,10 @@ import axios from 'axios';
 import Inventory from './models/inventoryModel';
 import {InventorySocket} from './websocket/index';
 
-import api from "./api/transactions";
-
 dotenv.config();
 
 const PORT = process.env.PORT || 8001;
-console.log("Machine Visoin Inventory running");
+console.log("Machine Visoin Devices running");
 console.log("Server started");
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({extended: false}));
@@ -43,8 +41,6 @@ app.get("/", function (req, res) {
 app.use("/api/devices", require("./api/devices"));
 app.use("/api/inventory", require("./api/inventory"));
 app.use('/api/events',require('./api/events'));
-
-app.use("/api", require('./api/transactions'));
 
 
 // Websocket

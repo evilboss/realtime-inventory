@@ -108,7 +108,7 @@ app.post("/new", function(req, res) {
         if (err) res.status(500).send(err);
         else {
             res.sendStatus(200);
-            Inventory.decrementInventory(transaction.products);
+            Devices.decrementInventory(transaction.products);
         }
     });
 });
