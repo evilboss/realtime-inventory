@@ -40,10 +40,12 @@ export default {
         {
             name: 'Events',
             icon: 'fas fa-calendar-alt',
+            url: '/events'
         },
         {
             name: 'Video Feed',
             icon: 'fas fa-video',
+            url: '/video-cameras'
         },
         {
             name: 'Weight Sensors',
@@ -85,6 +87,18 @@ export default {
             name: 'Device Settings',
             icon: 'fas fa-cogs',
             url: '/device-settings',
+
+        },
+        {
+            title: true,
+            name: 'User Management',
+
+            // optional class names space delimited list for title item ex: "text-center"
+        },
+        {
+            name: 'Users',
+            icon: 'fas fa-users',
+            url: '/users',
 
         },
     ],

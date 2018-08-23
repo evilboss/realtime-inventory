@@ -9869,7 +9869,7 @@ body {
 .app-header .navbar-nav .dropdown-menu-right {
   right: auto; }
 
-main {
+main.main-content {
   padding-top: 1vh; }
 
 html body .app.flex-row.align-items-center {

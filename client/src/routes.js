@@ -32,17 +32,26 @@ const SensorsAll = Loadable({
     loader: () => import('./js/components/SensorsAll'),
     loading: Loading
 });
-
+const Users = Loadable({
+    loader: () => import('./js/components/Users'),
+    loading: Loading
+});
+const Events = Loadable({
+    loader: () => import('./js/components/Events'),
+    loading: Loading
+});
 // https://github.com/ReactTraining/react-router/tree/master/packages/react-router-config
 const routes = [
     {path: '/', exact: true, name: 'Home', component: DefaultLayout},
     {path: '/inventory', name: 'Inventory', component: Inventory},
     {path: '/stats', name: 'Stats', component: InventoryStats},
     {path: '/device-settings', name: 'Device Settings', component: DeviceSettings},
+    {path: '/users', name: 'Users', component: Users},
+    {path: '/events', name: 'Users', component: Events},
     {path: '/sensors/settings', name: 'Sensor Settings', component: SensorsSettings},
     {path: '/sensors/calibration', name: 'Sensor Calibration', component: SensorsCalibration},
     {path: '/sensors', name: 'All Sensors', component: SensorsAll},
-
+    {path: '/video-cameras', name: 'Video Cameras', component: SensorsAll},
 
 
 ];
