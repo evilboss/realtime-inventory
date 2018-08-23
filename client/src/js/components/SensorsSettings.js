@@ -26,7 +26,7 @@ import {
     Row,
     Table,
 } from 'reactstrap';
-import {loadSensorSocket, loadInitialDataSocket} from "../actions/action";
+import {loadSensorSocket, loadInitialDataSocket, loadScaleSocket} from "../actions/action";
 
 let socket;
 const brandPrimary = getStyle('--primary');
@@ -113,6 +113,8 @@ export class SensorsSettings extends React.Component {
         socket = io.connect("http://localhost:5000");
         dispatch(loadSensorSocket(socket));
         dispatch(loadInitialDataSocket(socket));
+        dispatch(loadScaleSocket(socket));
+
         this.toggle = this.toggle.bind(this);
         this.state = {
             dropdownOpen: false,
@@ -129,7 +131,7 @@ export class SensorsSettings extends React.Component {
 
     render() {
         getRandomColor();
-        const {sensors, items} = this.props;
+        const {sensors, items, scales} = this.props;
         return (
             <div className='container-fluid'>
                 <div className='animated fadeIn'>
@@ -137,11 +139,11 @@ export class SensorsSettings extends React.Component {
                     </Row>
                     <Row>
                         {
-                            sensors.map(
-                                (sensor, key) =>
-                                    <SensorCard key={key} sensor={sensor} colors={colorArray} color={getRandomColor()}
+                            (scales) ? scales.map(
+                                (scale, key) =>
+                                    <SensorCard key={key} scale={scale} colors={colorArray} color={getRandomColor()}
                                                 items={items}/>
-                            )
+                            ) : ''
                         }
                     </Row>
                 </div>

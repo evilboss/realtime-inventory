@@ -4,19 +4,16 @@ var Datastore = require("nedb");
 
 
 // GET inventory
-const getScales = (callback) => {
+const get = (callback) => {
     let options = "";
     PythonShell.run('../scripts/deviceList.py', options, function (err, results) {
-        if (err) callback(err, null);
-        callback(null, results);
+        (err) ? callback(err, null) : callback(null, results);
     });
 };
 
 
 const Scales = {
-    get: get,
-    set: set
-
+    get: get
 };
 
 export default Scales;

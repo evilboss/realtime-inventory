@@ -50,8 +50,9 @@ export class SensorCard extends React.Component {
     }
 
     componentWillUnmount() {
-        socket.disconnect();
-        console.log('disconnecting');
+        (socket) ?
+            socket.disconnect() :
+            '';
     }
 
     save() {
@@ -59,7 +60,7 @@ export class SensorCard extends React.Component {
     }
 
     render() {
-        const {dispatch, sensor, color, colors, items} = this.props;
+        const {dispatch, scale, color, colors, items} = this.props;
         return (
             <Col xs="12" sm="12" lg="6">
                 <Card className={`text-white ${color}`}>
@@ -68,21 +69,22 @@ export class SensorCard extends React.Component {
                             <ButtonDropdown id='card' isOpen={this.state.card} toggle={() =>
                                 this.setState({collapse: !this.state.collapse})
                             }>
-                                <DropdownToggle color="transparent">
+                                <DropdownToggle className={`btn-sm ${(this.state.collapse) ? 'active' : ''}`}
+                                                color="transparent">
                                     <i className={`far fa-caret-square-${(this.state.collapse) ? 'down' : 'left'}`}
                                        style={{paddingLeft: '10px'}}></i>
                                 </DropdownToggle>
                             </ButtonDropdown>
                         </ButtonGroup>
-                        <div className="text-value">Sensor Signature: {sensor.signature}</div>
-                        <div>Sensor Status {sensor.status}</div>
+                        <div className="text-value">Sensor Signature: {scale.signature}</div>
+                        <div>Sensor Status {scale.status}</div>
                         <Collapse isOpen={this.state.collapse}>
                             <Form>
                                 <FormGroup>
                                     <Input ref="scaleId" type="hidden" name="scaleId" id="scaleId"
-                                           value={sensor.signature}/>
+                                           value={scale.signature}/>
                                     <Input ref="sensorId" type="hidden" name="sensorId" id="sensorId"
-                                           value={sensor.signature}/>
+                                           value={scale.signature}/>
                                     <Input ref="" type="hidden" name="name" id="name" placeholder="Sensor Name"/>
 
                                     <Label for="name">Sensor Name:</Label>

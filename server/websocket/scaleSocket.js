@@ -1,33 +1,23 @@
 import {Tail} from 'tail';
-import Devices from "../models/deviceModel";
+import Scales from "../models/scaleModel";
 
 const emit = (socket, data) => {
+    console.log(JSON.parse(data));
     socket.emit('scaleList', JSON.parse(data));
 };
 const emitData = () => {
 };
 
 const list = (socket) => {
-    Devices.get((err, res) => {
-        console.log(err, res);
+    Scales.get((err, res) => {
         (res) ? emit(socket, res) : ''
-    });
-};
-const insert = (socket) => {
-    socket.on('setDevice', (addData) => {
-        Inventory.insert(addData, (err, res) => {
-            (res) ? list(socket) : ''
-
-        });
     });
 };
 const start = (socket) => {
     list(socket);
-    insert(socket);
 };
 const ScaleSocket = {
     start: start,
     list: list,
-    insert: insert
 };
 export default ScaleSocket;

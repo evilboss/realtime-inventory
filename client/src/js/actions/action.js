@@ -27,7 +27,7 @@ export const sensorList = (res) => ({
 });
 export const scaleList = (res) => ({
     type: "SCALE_LIST",
-    sensors: res
+    scales: res
 });
 
 /***************************************************************************************** */
@@ -37,7 +37,7 @@ export const loadInitialDataSocket = (socket) => {
     return (dispatch) => {
         // dispatch(clearAllItems())
         socket.on('initialList', (res) => {
-            console.dir(res);
+            // console.dir(res);
             dispatch(initialItems(res))
         })
     }
@@ -55,7 +55,7 @@ export const loadScaleSocket = (socket) => {
     return (dispatch) => {
         // dispatch(clearAllItems())
         socket.on('scaleList', (res) => {
-            //console.dir(res);
+            // console.dir(res);
             dispatch(scaleList(res));
         })
     }

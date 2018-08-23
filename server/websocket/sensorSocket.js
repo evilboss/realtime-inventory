@@ -1,23 +1,21 @@
 import {Tail} from 'tail';
-import Devices from "../models/deviceModel";
+import Sensors from "../models/sensorModel";
 
 const emit = (socket, data) => {
-    socket.emit('sensorList', JSON.parse(data));
+    socket.emit('sensorList', data);
 };
 const emitData = () => {
 };
 
 const list = (socket) => {
-    Devices.get((err, res) => {
-        console.log(err, res);
-        (res) ? emit(socket, res) : ''
+    Sensors.get((err, res) => {
+        (res) ? emit(socket, res) : '';
     });
 };
 const insert = (socket) => {
-    socket.on('setDevice', (addData) => {
-        Inventory.insert(addData, (err, res) => {
-            (res) ? list(socket) : ''
-
+    socket.on('addSensor', (addData) => {
+        Sensors.set(addData, (err, res) => {
+            (res) ? list(socket) : console.log(err);
         });
     });
 };

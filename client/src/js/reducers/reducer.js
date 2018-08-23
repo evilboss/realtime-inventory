@@ -29,6 +29,11 @@ const reducer = (state = initialState, action) => {
                 ...state,
                 sensors: List(action.sensors)
             };
+        case 'SCALE_LIST':
+            return {
+                ...state,
+                scales: List(action.scales)
+            };
         default:
             return state
     }

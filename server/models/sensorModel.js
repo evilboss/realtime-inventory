@@ -9,7 +9,8 @@ const sensorDB = new Datastore({
 
 const get = (callback) => {
     sensorDB.find({}, (err, docs) => {
-        callback(null, docs);
+        (docs) ? callback(null, docs) : callback(err, []);
+
     });
 };
 const set = (newProduct, callback) => {
@@ -25,7 +26,8 @@ const remove = (productId) => {
 };
 const Sensors = {
     get: get,
-    set: set
+    set: set,
+    remove: remove
 };
 
 export default Sensors;

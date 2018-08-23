@@ -23,8 +23,6 @@ export class Inventory extends React.Component {
         //    dispatch(loadInitialData())
         socket = io.connect("http://localhost:5000");
         dispatch(loadInitialDataSocket(socket));
-        dispatch(loadSensorSocket(socket));
-
         socket.on('itemAdded', (res) => {
             console.dir(res);
             dispatch(AddItem(res))
@@ -39,7 +37,6 @@ export class Inventory extends React.Component {
 
     render() {
         const {dispatch, items} = this.props;
-
         return (
             <div>
                 <h1>Machine Vision Inventory</h1>
