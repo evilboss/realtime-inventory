@@ -35,12 +35,6 @@ export class DeviceSettings extends React.Component {
                 <div className='animated fadeIn'>
                     <Row>
                         <h1>Device Settings</h1>
-
-                        <Col xs="12" sm="6" lg="3">
-                            <Card className="text-white bg-info">
-
-                            </Card>
-                        </Col>
                     </Row>
 
                 </div>
