@@ -35,13 +35,18 @@ export class SensorsAll extends React.Component {
                     <table className="table table-hover table-striped table-bordered table-dark">
                         <thead>
                         <tr>
+                            <th scope="col">ID</th>
                             <th scope="col">Status</th>
                             <th scope="col">Signature</th>
+                            <th scope="col">Name</th>
+                            <th scope="col">Item Asigned</th>
+                            <th scope="col">Device Color</th>
+                            <th scope="col">Item Weight</th>
                         </tr>
                         </thead>
                         <tbody>
                         {sensors.map((sensor, key) => <tr key={key}>
-                            <td>{sensor.status}</td>
+                            <td><span className={'badge badge-success'}>{sensor.status}</span></td>
                             <td>{sensor.signature}</td>
                         </tr>)}
                         </tbody>

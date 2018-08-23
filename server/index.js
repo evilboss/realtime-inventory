@@ -8,7 +8,7 @@ var express = require("express"),
 import dotenv from 'dotenv';
 import axios from 'axios';
 import Inventory from './models/inventoryModel';
-import {InventorySocket, SensorSocket} from './websocket/index';
+import {InventorySocket, SensorSocket, ScaleSocket} from './websocket/index';
 
 dotenv.config();
 
@@ -42,9 +42,6 @@ app.use("/api/devices", require("./api/devices"));
 app.use("/api/inventory", require("./api/inventory"));
 app.use('/api/events', require('./api/events'));
 
-
-// Websocket
-
 server.listen(PORT, () => console.log(`Listening on PORT ${PORT}`));
 const connections = [];
 io.on('connection', function (socket) {
@@ -55,7 +52,5 @@ io.on('connection', function (socket) {
 
     InventorySocket.start(socket);
     SensorSocket.start(socket);
-    socket.on('markItem', (markedItem) => {
-    });
-
+    ScaleSocket.start(socket);
 });

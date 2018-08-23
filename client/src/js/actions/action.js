@@ -1,13 +1,6 @@
 import axios from "axios";
 import _ from 'underscore';
 
-const formatSensors = (sensors, items) => {
-    let formatedSensors = [];
-    _.each(sensors, (sensor) => {
-        formatedSensors.push({name: sensor.name, signature: sensor.signature});
-    });
-};
-
 export const AddItem = (data) => ({
     type: "ADD_ITEM",
     item: data.item,
@@ -32,6 +25,10 @@ export const sensorList = (res) => ({
     type: "SENSOR_LIST",
     sensors: res
 });
+export const scaleList = (res) => ({
+    type: "SCALE_LIST",
+    sensors: res
+});
 
 /***************************************************************************************** */
 /* Async Action items using - Sockets													   */
@@ -54,6 +51,16 @@ export const loadSensorSocket = (socket) => {
         })
     }
 };
+export const loadScaleSocket = (socket) => {
+    return (dispatch) => {
+        // dispatch(clearAllItems())
+        socket.on('scaleList', (res) => {
+            //console.dir(res);
+            dispatch(scaleList(res));
+        })
+    }
+};
+
 export const addNewItemSocket = (socket, id, itemName) => {
     return (dispatch) => {
         let data = {

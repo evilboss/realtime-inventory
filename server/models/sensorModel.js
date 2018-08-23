@@ -6,17 +6,9 @@ const sensorDB = new Datastore({
     autoload: true
 });
 
-// GET inventory
-const getSensors = (callback) => {
-    let options = "";
-    PythonShell.run('../scripts/deviceList.py', options, function (err, results) {
-        if (err) callback(err, null);
-        callback(null, results);
-    });
-};
 
 const get = (callback) => {
-    getSensors((err, docs) => {
+    sensorDB.find({}, (err, docs) => {
         callback(null, docs);
     });
 };
