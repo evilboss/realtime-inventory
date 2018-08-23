@@ -2,7 +2,6 @@ import {Tail} from 'tail';
 import Scales from "../models/scaleModel";
 
 const emit = (socket, data) => {
-    console.log(JSON.parse(data));
     socket.emit('scaleList', JSON.parse(data));
 };
 const emitData = () => {
