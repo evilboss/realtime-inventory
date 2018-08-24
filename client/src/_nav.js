@@ -45,7 +45,7 @@ export default {
         {
             name: 'Video Feed',
             icon: 'fas fa-video',
-            url: '/video-cameras'
+            url: '/video-feed'
         },
         {
             name: 'Weight Sensors',

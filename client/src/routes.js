@@ -46,7 +46,10 @@ const User = Loadable({
     loading: Loading,
 });
 
-// https://github.com/ReactTraining/react-router/tree/master/packages/react-router-config
+const VideoCameras = Loadable({
+    loader: () => import('./js/components/VideoCameras'),
+    loading: Loading,
+})
 const routes = [
     {path: '/', exact: true, name: 'Home', component: DefaultLayout},
     {path: '/inventory', name: 'Inventory', component: Inventory},
@@ -57,7 +60,7 @@ const routes = [
     {path: '/sensors/all', name: 'All Sensors', component: SensorsAll},
     {path: '/sensors/settings', name: 'Sensor Settings', component: SensorsSettings},
     {path: '/sensors/calibration', name: 'Sensor Calibration', component: SensorsCalibration},
-    {path: '/video-cameras', name: 'Video Cameras', component: SensorsAll},
+    {path: '/video-feed', name: 'Video Cameras', component: VideoCameras},
     {path: '/users', exact: true, name: 'Users', component: Users},
     {path: '/user/:id', exact: true, name: 'User Details', component: User},
 
