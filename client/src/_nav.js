@@ -54,7 +54,7 @@ export default {
                 {
                     name: 'All Sensors',
                     icon: 'fab fa-cloudscale',
-                    url: '/sensors'
+                    url: '/sensors/all'
                 },
                 {
                     name: 'Sensor Settings',

@@ -48,9 +48,9 @@ const routes = [
     {path: '/device-settings', name: 'Device Settings', component: DeviceSettings},
     {path: '/users', name: 'Users', component: Users},
     {path: '/events', name: 'Users', component: Events},
+    {path: '/sensors/all', name: 'All Sensors', component: SensorsAll},
     {path: '/sensors/settings', name: 'Sensor Settings', component: SensorsSettings},
     {path: '/sensors/calibration', name: 'Sensor Calibration', component: SensorsCalibration},
-    {path: '/sensors', name: 'All Sensors', component: SensorsAll},
     {path: '/video-cameras', name: 'Video Cameras', component: SensorsAll},
 
 
