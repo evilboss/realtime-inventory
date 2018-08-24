@@ -4,8 +4,8 @@ import { Badge, Card, CardBody, CardHeader, Col, Row, Table } from 'reactstrap';
 import usersData from './UsersData'
 
 function UserRow(props) {
-  const user = props.user
-  const userLink = `#/users/${user.id}`
+  const user = props.user;
+  const userLink = `/user/${user.id}`;
 
   const getBadge = (status) => {
     return status === 'Active' ? 'success' :
@@ -13,7 +13,7 @@ function UserRow(props) {
         status === 'Pending' ? 'warning' :
           status === 'Banned' ? 'danger' :
             'primary'
-  }
+  };
 
   return (
     <tr key={user.id.toString()}>
@@ -30,7 +30,7 @@ class Users extends Component {
 
   render() {
 
-    const userList = usersData.filter((user) => user.id < 10)
+    const userList = usersData.filter((user) => user.id < 10);
 
     return (
       <div className="animated fadeIn">
