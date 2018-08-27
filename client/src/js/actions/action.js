@@ -29,6 +29,10 @@ export const scaleList = (res) => ({
     type: "SCALE_LIST",
     scales: res
 });
+export const eventList = (res) => ({
+    type: "EVENT_LIST",
+    scales: res
+});
 
 /***************************************************************************************** */
 /* Async Action items using - Sockets													   */
@@ -57,6 +61,14 @@ export const loadScaleSocket = (socket) => {
         socket.on('scaleList', (res) => {
             // console.dir(res);
             dispatch(scaleList(res));
+        })
+    }
+};
+export const loadEventsData = (socket) => {
+    return (dispatch) => {
+        // dispatch(clearAllItems())
+        socket.on('eventList', (res) => {
+            dispatch(eventList(res));
         })
     }
 };

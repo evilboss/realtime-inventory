@@ -9,16 +9,17 @@ import dotenv from 'dotenv';
 import axios from 'axios';
 import Inventory from './models/inventoryModel';
 import {InventorySocket, SensorSocket, ScaleSocket} from './websocket/index';
+import connectToDb from './db/connect';
 
 dotenv.config();
 
-const PORT = process.env.PORT || 8001;
+const PORT = process.env.PORT || 5000;
 console.log("Machine Visoin Devices running");
 console.log("Server started");
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({extended: false}));
 
-app.all("/*", function (req, res, next) {
+app.all("/*", (req, res, next) => {
     // CORS headers
     res.header("Access-Control-Allow-Origin", "*"); // restrict it to the required domain
     res.header("Access-Control-Allow-Methods", "GET,PUT,POST,DELETE,OPTIONS");
@@ -35,12 +36,12 @@ app.all("/*", function (req, res, next) {
 });
 
 app.get("/", function (req, res) {
-    res.send(" Real time POS web app running.");
+    res.send(" Real time Inventory web app running.");
 });
 
 app.use("/api/devices", require("./api/devices"));
 app.use("/api/inventory", require("./api/inventory"));
-app.use('/api/events', require('./api/events'));
+app.use('/api/events', require('./routes/events.route'));
 
 server.listen(PORT, () => console.log(`Listening on PORT ${PORT}`));
 const connections = [];

@@ -1,7 +1,7 @@
 import {List} from 'immutable';
 
 let id = 0;
-const initialState = {items: List([]), sensors: List([])};
+const initialState = {items: List([]), sensors: List([]), events: List([])};
 
 
 const reducer = (state = initialState, action) => {
@@ -33,6 +33,11 @@ const reducer = (state = initialState, action) => {
             return {
                 ...state,
                 scales: List(action.scales)
+            };
+        case 'EVENT_LIST':
+            return {
+                ...state,
+                events: List(action.events)
             };
         default:
             return state
